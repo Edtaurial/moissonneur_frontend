@@ -14,7 +14,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Search, Download } from 'lucide-react'; // Import icône Download
+import { Search, Download, User } from 'lucide-react'; // Import icône Download
 import DataCharts from '@/components/DataCharts';
 
 // Imports pour le PDF
@@ -118,6 +118,16 @@ export default function Dashboard() {
             <p className="text-slate-500 mt-1">Bienvenue, {user}</p>
           </div>
           <div className="flex gap-2">
+            {/* Bouton Profil */}
+            <Button 
+                variant="secondary" 
+                onClick={() => navigate('/profil')}
+                className="gap-2"
+            >
+                <User size={16} /> {/* Importez User depuis 'lucide-react' */}
+                Mon Profil
+            </Button>
+            
             {/* Bouton Export PDF */}
             <Button 
                 variant="outline" 
@@ -186,7 +196,7 @@ export default function Dashboard() {
                 
                 {/* Liste */}
                 <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-                {filteredItems.slice(0, 50).map((jeu) => (
+                {filteredItems.map((jeu) => (
                     <Card key={jeu.id} className="hover:shadow-md transition-shadow h-full flex flex-col">
                     <CardHeader>
                         <CardTitle className="text-lg leading-tight line-clamp-2" title={jeu.titre}>
