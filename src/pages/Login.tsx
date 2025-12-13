@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { login } from '../store/authentificationSlice';
 import api from '../services/api';
+import { Link } from 'react-router-dom';
 
 // Imports ShadCN (vérifie les chemins si tes composants sont ailleurs)
 import { Button } from "@/components/ui/button"
@@ -107,6 +108,11 @@ export default function Login() {
             <Button type="submit" disabled={loading}>
               {loading ? 'Connexion...' : 'Se connecter'}
             </Button>
+
+            <div className="text-sm text-center text-slate-500">
+             Pas de compte ? <Link to="/register" className="text-blue-600 hover:underline">S'inscrire</Link>
+            </div>
+
           </CardFooter>
         </form>
       </Card>
