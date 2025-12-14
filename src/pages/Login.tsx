@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { login } from '../store/authentificationSlice';
 import api from '../services/api';
-import { Link } from 'react-router-dom';
 
 // Imports ShadCN (vérifie les chemins si tes composants sont ailleurs)
 import { Button } from "@/components/ui/button"
@@ -61,7 +60,7 @@ export default function Login() {
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-slate-100">
-      <Card className="w-[350px] shadow-lg">
+      <Card className="w-[400px] shadow-lg">
         <CardHeader>
           <CardTitle className="text-2xl">Connexion</CardTitle>
           <CardDescription>Accédez à votre espace de données.</CardDescription>
@@ -84,6 +83,7 @@ export default function Login() {
                   placeholder="Ex: admin"
                   value={username} 
                   onChange={e => setUsername(e.target.value)} 
+                  className="h-10"
                   required 
                 />
               </div>
@@ -96,25 +96,27 @@ export default function Login() {
                   placeholder="••••••••"
                   value={password} 
                   onChange={e => setPassword(e.target.value)} 
+                  className="h-10"
                   required 
                 />
               </div>
             </div>
           </CardContent>
           <CardFooter className="flex justify-between">
-            <Button variant="ghost" type="button" onClick={() => {setUsername(''); setPassword('')}}>
+            <Button variant="ghost" type="button" onClick={() => {setUsername(''); setPassword('')}} className="cursor-pointer hover:cursor-pointer">
               Effacer
             </Button>
-            <Button type="submit" disabled={loading}>
+            <Button type="submit" disabled={loading} className="cursor-pointer hover:cursor-pointer">
               {loading ? 'Connexion...' : 'Se connecter'}
             </Button>
-
-            <div className="text-sm text-center text-slate-500">
-             Pas de compte ? <Link to="/register" className="text-blue-600 hover:underline">S'inscrire</Link>
-            </div>
-
           </CardFooter>
         </form>
+        <div className="px-6 pb-4 text-sm text-slate-600">
+          Pas de compte ?{' '}
+          <Link to="/register" className="text-blue-600 hover:underline">
+            S'inscrire
+          </Link>
+        </div>
       </Card>
     </div>
   );

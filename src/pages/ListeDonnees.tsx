@@ -8,6 +8,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Search, Eye } from 'lucide-react';
+import { color } from 'html2canvas/dist/types/css/types/color';
 
 export default function DataList() {
   const dispatch = useDispatch<AppDispatch>();
@@ -43,7 +44,7 @@ export default function DataList() {
       <h1 className="text-3xl font-bold text-slate-800">Catalogue de Données</h1>
 
       {/* --- Correction Layout : Utilisation de Grid au lieu de Flex pour un meilleur espacement --- */}
-      <div className="bg-white p-6 rounded-lg shadow-sm border border-slate-200 mb-6 relative z-10">
+      <div style={{marginBottom: '100px' }}>
         <div className="grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
           
           {/* Barre de Recherche (prend 5 colonnes) */}

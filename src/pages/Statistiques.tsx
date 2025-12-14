@@ -7,7 +7,6 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input"; // NOUVEAU
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"; // NOUVEAU
 import { Download, Search, Filter } from 'lucide-react';
-import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 
 export default function Stats() {
@@ -47,28 +46,40 @@ export default function Stats() {
     if (!statsRef.current) return;
     setIsExporting(true);
     try {
-      // Astuce : On capture avec un fond blanc forcé pour éviter le gris du PDF
-      const canvas = await html2canvas(statsRef.current, { 
-        scale: 2,
-        backgroundColor: '#ffffff' 
-      });
+      // Wrap content to prevent oklch() CSS parsing errors
+      const wrapper = document.createElement('div');
+      wrapper.style.backgroundColor = '#ffffff';
+      wrapper.innerHTML = statsRef.current.innerHTML;
       
+      // Temporarily append to DOM for html2canvas to render
+      document.body.appendChild(wrapper);
+
+      const { default: html2canvas } = await import('html2canvas');
+      const canvas = await html2canvas(wrapper, {
+        scale: 2,
+        backgroundColor: '#ffffff',
+        useCORS: true,
+        allowTaint: true,
+      });
+
+      document.body.removeChild(wrapper);
+
       const imgData = canvas.toDataURL('image/png');
       const pdf = new jsPDF('p', 'mm', 'a4');
       const pdfWidth = pdf.internal.pageSize.getWidth();
       const imgProps = pdf.getImageProperties(imgData);
       const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
-      
-      // En-tête du PDF
+
       pdf.setFontSize(18);
       pdf.text("Rapport Statistique - Plateforme de Données", 10, 15);
       pdf.setFontSize(10);
       pdf.text(`Généré le ${new Date().toLocaleDateString()}`, 10, 22);
-      
+
       pdf.addImage(imgData, 'PNG', 0, 30, pdfWidth, pdfHeight);
       pdf.save('rapport-statistiques.pdf');
     } catch (error) {
-        console.error("Erreur PDF", error);
+      console.error('Erreur PDF', error);
+      alert("Échec de l'export PDF. Consulte la console pour le détail.");
     } finally {
       setIsExporting(false);
     }
@@ -82,7 +93,7 @@ export default function Stats() {
             <h1 className="text-3xl font-bold text-slate-800">Statistiques</h1>
             <p className="text-slate-500">Visualisation interactive des données</p>
         </div>
-        <Button onClick={handleExportPDF} disabled={isExporting || loading} className="gap-2 bg-slate-800 hover:bg-slate-700">
+        <Button onClick={handleExportPDF} disabled={isExporting || loading} className="gap-2 bg-slate-800 hover:bg-slate-700 cursor-pointer hover:cursor-pointer">
             <Download size={16} /> {isExporting ? 'Génération...' : 'Exporter le rapport PDF'}
         </Button>
       </div>
@@ -104,7 +115,7 @@ export default function Stats() {
             />
           </div>
           {/* Organisation */}
-          <div className="col-span-1 md:col-span-4">
+          <div style={{marginBottom: '100px' }}>
             <Select value={selectedOrg} onValueChange={setSelectedOrg}>
               <SelectTrigger className="w-full bg-white">
                 <SelectValue placeholder="Filtrer par Organisation" />

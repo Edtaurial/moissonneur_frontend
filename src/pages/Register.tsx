@@ -55,23 +55,23 @@ export default function Register() {
             
             <div className="space-y-1">
               <Label htmlFor="username">Nom d'utilisateur</Label>
-              <Input id="username" value={formData.username} onChange={handleChange} required />
+              <Input id="username" value={formData.username} onChange={handleChange} required className="h-10" />
             </div>
             <div className="space-y-1">
               <Label htmlFor="email">Courriel</Label>
-              <Input id="email" type="email" value={formData.email} onChange={handleChange} required />
+              <Input id="email" type="email" value={formData.email} onChange={handleChange} required className="h-10" />
             </div>
             <div className="space-y-1">
               <Label htmlFor="password">Mot de passe</Label>
-              <Input id="password" type="password" value={formData.password} onChange={handleChange} required />
+              <Input id="password" type="password" value={formData.password} onChange={handleChange} required className="h-10" />
             </div>
             <div className="space-y-1">
               <Label htmlFor="confirmPassword">Confirmer le mot de passe</Label>
-              <Input id="confirmPassword" type="password" value={formData.confirmPassword} onChange={handleChange} required />
+              <Input id="confirmPassword" type="password" value={formData.confirmPassword} onChange={handleChange} required className="h-10" />
             </div>
           </CardContent>
           <CardFooter className="flex flex-col gap-2">
-            <Button type="submit" className="w-full" disabled={loading}>
+            <Button type="submit" className="w-full cursor-pointer hover:cursor-pointer" disabled={loading}>
               {loading ? 'Création...' : "S'inscrire"}
             </Button>
             <div className="text-sm text-center text-slate-500">

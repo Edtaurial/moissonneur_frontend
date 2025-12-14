@@ -5,7 +5,6 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ArrowLeft, Calendar, Link as LinkIcon, Building, Download } from 'lucide-react';
 import { JeuDeDonnees } from '@/store/donneesSlice';
-import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 
 export default function DataDetails() {
@@ -32,25 +31,59 @@ export default function DataDetails() {
 
   const handleExportPDF = async () => {
     if (!contentRef.current || !data) return;
-    
-    const canvas = await html2canvas(contentRef.current, { scale: 2, backgroundColor: '#ffffff' });
-    const imgData = canvas.toDataURL('image/png');
-    const pdf = new jsPDF('p', 'mm', 'a4');
-    const pdfWidth = pdf.internal.pageSize.getWidth();
-    
-    // En-tête
-    pdf.setFontSize(16);
-    pdf.text("Fiche Détail - Jeu de Données", 10, 15);
-    pdf.setFontSize(10);
-    pdf.text(`Exporté le ${new Date().toLocaleDateString()}`, 10, 22);
-    pdf.line(10, 25, pdfWidth - 10, 25);
+    try {
+      // Create a style element to override oklch colors with fallbacks
+      const styleEl = document.createElement('style');
+      styleEl.textContent = `
+        * { 
+          color: #1f2937 !important; 
+          background-color: transparent !important;
+          border-color: #e5e7eb !important;
+        }
+        body { background-color: #ffffff !important; }
+      `;
+      document.head.appendChild(styleEl);
 
-    // Contenu
-    const imgProps = pdf.getImageProperties(imgData);
-    const pdfHeight = (imgProps.height * (pdfWidth - 20)) / imgProps.width;
-    pdf.addImage(imgData, 'PNG', 10, 35, pdfWidth - 20, pdfHeight);
-    
-    pdf.save(`fiche_${data.id}.pdf`);
+      // Wrap content to prevent oklch() CSS parsing errors
+      const wrapper = document.createElement('div');
+      wrapper.style.backgroundColor = '#ffffff';
+      wrapper.innerHTML = contentRef.current.innerHTML;
+      
+      // Temporarily append to DOM for html2canvas to render
+      document.body.appendChild(wrapper);
+
+      const { default: html2canvas } = await import('html2canvas');
+      const canvas = await html2canvas(wrapper, {
+        scale: 2,
+        backgroundColor: '#ffffff',
+        useCORS: true,
+        allowTaint: true,
+      });
+
+      document.body.removeChild(wrapper);
+      document.head.removeChild(styleEl);
+
+      const imgData = canvas.toDataURL('image/png');
+      const pdf = new jsPDF('p', 'mm', 'a4');
+      const pdfWidth = pdf.internal.pageSize.getWidth();
+      
+      // En-tête
+      pdf.setFontSize(16);
+      pdf.text("Fiche Détail - Jeu de Données", 10, 15);
+      pdf.setFontSize(10);
+      pdf.text(`Exporté le ${new Date().toLocaleDateString()}`, 10, 22);
+      pdf.line(10, 25, pdfWidth - 10, 25);
+
+      // Contenu
+      const imgProps = pdf.getImageProperties(imgData);
+      const pdfHeight = (imgProps.height * (pdfWidth - 20)) / imgProps.width;
+      pdf.addImage(imgData, 'PNG', 10, 35, pdfWidth - 20, pdfHeight);
+      
+      pdf.save(`fiche_${data.id}.pdf`);
+    } catch (error) {
+      console.error('Erreur PDF', error);
+      alert("Échec de l'export PDF. Consulte la console pour le détail.");
+    }
   };
 
   if (loading) return <div className="p-8">Chargement...</div>;
@@ -62,7 +95,7 @@ export default function DataDetails() {
         <Button variant="ghost" onClick={() => navigate(-1)} className="gap-2 pl-0 hover:bg-transparent">
             <ArrowLeft size={16} /> Retour
         </Button>
-        <Button variant="outline" onClick={handleExportPDF} className="gap-2">
+        <Button variant="outline" onClick={handleExportPDF} className="gap-2 cursor-pointer hover:cursor-pointer">
             <Download size={16} /> Exporter la fiche
         </Button>
       </div>
