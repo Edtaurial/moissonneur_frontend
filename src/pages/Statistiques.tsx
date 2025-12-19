@@ -93,9 +93,14 @@ export default function Stats() {
             <h1 className="text-3xl font-bold text-slate-800">Statistiques</h1>
             <p className="text-slate-500">Visualisation interactive des données</p>
         </div>
-        <Button onClick={handleExportPDF} disabled={isExporting || loading} className="gap-2 bg-slate-800 hover:bg-slate-700 cursor-pointer hover:cursor-pointer">
-            <Download size={16} /> {isExporting ? 'Génération...' : 'Exporter le rapport PDF'}
-        </Button>
+        <Button
+          onClick={handleExportPDF}
+          disabled={isExporting || loading}
+          className="gap-2 bg-blue-700 hover:bg-blue-800 text-white font-semibold text-base px-6 py-3 rounded-lg border border-blue-900 shadow
+           focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 transition-all duration-150 cursor-pointer hover:cursor-pointer"
+        >
+          <Download size={18} /> {isExporting ? 'Génération...' : 'Exporter le rapport PDF'}
+         </Button>
       </div>
 
       {/* Zone de Filtres */}
@@ -135,12 +140,12 @@ export default function Stats() {
         </div>
       </div>
 
-      {/* Zone Graphiques (Capturable par PDF) */}
+      {/* Section Statistiques */}
       <div ref={statsRef} className="bg-slate-50 p-4 rounded-xl border border-slate-100">
         {loading ? (
             <div className="text-center py-20">Chargement des données...</div>
         ) : (
-            // On passe les données FILTRÉES aux graphiques
+            // On passe les données filtrees aux graphiques
             <DataCharts data={filteredItems} />
         )}
       </div>

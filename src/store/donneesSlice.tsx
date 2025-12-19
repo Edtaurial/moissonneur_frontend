@@ -1,7 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import api from '@/services/api';
 
-// Définition du type pour un jeu de données
 export interface JeuDeDonnees {
   id: number;
   titre: string;
@@ -25,7 +24,7 @@ const initialState: DataState = {
   error: null,
 };
 
-// Action asynchrone pour récupérer les données depuis Django
+// action asynchrone pour récupérer les données depuis Django
 export const fetchJeuxDeDonnees = createAsyncThunk(
   'data/fetchJeuxDeDonnees',
   async (_, { rejectWithValue }) => {

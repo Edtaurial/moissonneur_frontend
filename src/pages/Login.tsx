@@ -33,20 +33,19 @@ export default function Login() {
     setLoading(true);
 
     try {
-      // Tente de se connecter à l'API Django
-      // Assure-toi que ton backend tourne sur le port 8000
+
       const response = await api.post('api/token-auth/', { 
         username, 
         password 
       });
 
-      // Si succès, on récupère le token
+      // si succès, on récupère le token
       const { token } = response.data;
       
-      // On met à jour Redux
+      // on met à jour Redux
       dispatch(login({ token, user: username }));
       
-      // On redirige vers le Dashboard
+      //redirection vers le Dashboard
       navigate('/dashboard');
 
     } catch (err: any) {
@@ -68,7 +67,7 @@ export default function Login() {
         <form onSubmit={handleLogin}>
           <CardContent>
             <div className="grid w-full items-center gap-4">
-              {/* Affichage de l'erreur */}
+              {/* affichage de l'erreur */}
               {error && (
                 <div className="p-3 text-sm text-red-500 bg-red-50 border border-red-200 rounded flex items-center gap-2">
                   <AlertCircle size={16} />

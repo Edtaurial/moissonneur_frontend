@@ -9,8 +9,7 @@ export default function GraphQLExplorer() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   
-  // 1. État pour la requête personnalisable
-  // On met une requête par défaut pour aider l'utilisateur
+ //requête par défaut 
   const [query, setQuery] = useState(`query {
   allJeuDonnees {
     id
@@ -27,7 +26,7 @@ export default function GraphQLExplorer() {
     try {
       console.log("Envoi requête GraphQL...");
       
-      // 2. On utilise l'état 'query' (la valeur du textarea)
+      
       const response = await api.post('graphql/', {
         query: query
       });
@@ -42,7 +41,6 @@ export default function GraphQLExplorer() {
         setData(response.data.data.allJeuDonnees);
       } else {
         // Cas où la requête est valide mais ne demande pas 'allJeuDonnees'
-        // (ex: l'utilisateur a changé le nom du champ ou fait une introspection)
         throw new Error("Aucune donnée 'allJeuDonnees' trouvée. Vérifiez votre requête.");
       }
 
@@ -100,7 +98,7 @@ export default function GraphQLExplorer() {
         <div>
           <h2 className="text-xl font-semibold mb-4 text-slate-700 flex items-center gap-2">
             Résultats 
-            {data.length > 0 && <span className="text-sm font-normal text-slate-500">({data.length} éléments)</span>}
+            {<span className="text-sm font-normal text-slate-500">({data.length} éléments)</span>}
           </h2>
           
           <div className="bg-white rounded-lg shadow-sm border border-slate-200 p-0 h-[500px] overflow-hidden flex flex-col">

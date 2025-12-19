@@ -15,8 +15,8 @@ export default function Profile() {
     last_name: '',
     email: '',
     username: '',
-    password: '',       // Nouveau champ
-    confirmPassword: '' // Nouveau champ
+    password: '',       
+    confirmPassword: ''
   });
 
   const [loading, setLoading] = useState(true);
@@ -30,7 +30,7 @@ export default function Profile() {
   const fetchProfile = async () => {
     try {
       const response = await api.get('api/me/');
-      // On ne remplit pas les champs mot de passe à la lecture
+      // On ne remplit pas les champs mot de passe a la lecture
       setFormData(prev => ({ ...prev, ...response.data, password: '', confirmPassword: '' }));
     } catch (error) {
       console.error("Erreur chargement profil:", error);
@@ -48,7 +48,7 @@ export default function Profile() {
     e.preventDefault();
     setMessage(null);
 
-    // Validation du mot de passe
+    // validation du mot de passe
     if (formData.password && formData.password !== formData.confirmPassword) {
       setMessage({ type: 'error', text: "Les nouveaux mots de passe ne correspondent pas." });
       return;
@@ -57,14 +57,14 @@ export default function Profile() {
     setSaving(true);
 
     try {
-      // On prépare l'objet à envoyer
+      // on prépare l'objet à envoyer
       const dataToSend: any = {
         first_name: formData.first_name,
         last_name: formData.last_name,
         email: formData.email
       };
 
-      // On ajoute le mot de passe seulement s'il a été rempli
+      // on ajoute le mot de passe seulement s'il a été rempli
       if (formData.password) {
         dataToSend.password = formData.password;
       }
@@ -73,7 +73,7 @@ export default function Profile() {
       
       setMessage({ type: 'success', text: "Profil mis à jour avec succès !" });
       
-      // On vide les champs mot de passe après succès
+      // on vide les champs mot de passe après succès
       setFormData(prev => ({ ...prev, password: '', confirmPassword: '' }));
 
     } catch (error) {

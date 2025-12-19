@@ -23,18 +23,14 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto flex flex-wrap items-center gap-4 justify-between">
         <div className="flex items-center gap-4 flex-wrap">
           <Link to="/" className="text-xl font-bold flex items-center gap-2">
-            <Database className="text-blue-400" /> Plateforme
+            <Home size={18} className="text-blue-400" /> Accueil
           </Link>
 
           <div className="flex gap-2 flex-wrap">
-            <Link to="/home">
-              <Button variant="ghost" className={`text-white hover:text-white hover:bg-slate-700 cursor-pointer hover:cursor-pointer ${isActive('/home')}`}>
-                <Home size={18} className="mr-2"/> Accueil
-              </Button>
-            </Link>
+            
             <Link to="/data">
               <Button variant="ghost" className={`text-white hover:text-white hover:bg-slate-700 cursor-pointer hover:cursor-pointer ${isActive('/data')}`}>
-                <Database size={18} className="mr-2"/> Données
+                <Database size={18} className="text-gray-400"/> Données
               </Button>
             </Link>
             <Link to="/stats">
@@ -44,7 +40,7 @@ export default function Navbar() {
             </Link>
             <Link to="/profile">
               <Button variant="ghost" className={`text-white hover:text-white hover:bg-slate-700 cursor-pointer hover:cursor-pointer ${isActive('/profile')}`}>
-                <User size={18} className="mr-2"/> Profil
+                <User size={18} className="text-red-500"/> Profil
               </Button>
             </Link>
           </div>
@@ -52,8 +48,8 @@ export default function Navbar() {
 
         <div className="flex items-center gap-2">
           <span className="text-sm text-slate-400 mr-2 hidden sm:inline">{user}</span>
-          <Button variant="destructive" size="sm" onClick={handleLogout} className="gap-2 cursor-pointer hover:cursor-pointer">
-            <LogOut size={16} /> <span className="hidden sm:inline text-red-500">Sortir</span>
+          <Button variant="ghost" size="sm" onClick={handleLogout} className="gap-2 cursor-pointer hover:cursor-pointer text-red-500 hover:text-red-400 hover:bg-slate-800">
+            <LogOut size={16} /> <span>Se déconnecter</span>
           </Button>
         </div>
       </div>

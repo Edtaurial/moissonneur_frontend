@@ -3,8 +3,6 @@ import { BrowserRouter as Router, Routes, Route, Navigate, Outlet } from 'react-
 import ProtectedRoute from './components/ProtectedRoute';
 import Navbar from './components/Navbar';
 import GraphQL from './pages/Graphql';
-
-// Import des pages
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Home from './pages/Acceuil';
@@ -13,8 +11,7 @@ import DataDetails from './pages/Details';
 import Stats from './pages/Statistiques';
 import Profile from './pages/Profil';
 
-// Layout principal pour les pages connectées
-// Il affiche la Navbar en haut et le contenu de la page (Outlet) en dessous
+
 const MainLayout = () => {
   return (
     <div className="min-h-screen bg-slate-50">
@@ -30,34 +27,29 @@ function App() {
   return (
     <Router>
       <Routes>
-        {/* --- Routes Publiques --- */}
+        {/*routes publiques*/}
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
 
-        {/* --- Routes Protégées (Nécessitent connexion) --- */}
+        {/*routes protégées connexion requise*/}
         <Route element={<ProtectedRoute />}>
-          {/* On utilise MainLayout pour avoir la Navbar sur toutes ces pages */}
           <Route element={<MainLayout />}>
-            
-            {/* Page d'accueil */}
+            {/* Accueil */}
             <Route path="/home" element={<Home />} />
             
             {/* Catalogue de données */}
             <Route path="/data" element={<DataList />} />
             
-            {/* Détails d'une donnée (ID dynamique) */}
+            {/* Détails d'une donnée  */}
             <Route path="/data/:id" element={<DataDetails />} />
             
             {/* Statistiques et Rapports */}
             <Route path="/stats" element={<Stats />} />
             
             {/* Profil Utilisateur */}
-            <Route path="/profile" element={<Profile />} />
+            <Route path="/profil" element={<Profile />} />
             <Route path="/graphql" element={<GraphQL />} />
-
             
-            <Route path="/register" element={<Register />} />
-
             {/* Redirections pour les anciennes routes ou la racine */}
             <Route path="/dashboard" element={<Navigate to="/home" replace />} />
             <Route path="/" element={<Navigate to="/home" replace />} />
@@ -65,7 +57,7 @@ function App() {
           </Route>
         </Route>
 
-        {/* Route par défaut : redirige vers le login si l'URL est inconnue */}
+        {/* Route par défaut : redirige vers le login si url est inconnue */}
         <Route path="*" element={<Navigate to="/login" replace />} />
       </Routes>
     </Router>

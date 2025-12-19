@@ -14,10 +14,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Search, Download, User } from 'lucide-react'; // Import icône Download
+import { Search, Download, User } from 'lucide-react'; // import icône Download
 import DataCharts from '@/components/DataCharts';
 
-// Imports pour le PDF
+// imports pour le pdf
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 
@@ -25,16 +25,16 @@ export default function Dashboard() {
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
   
-  // Référence pour capturer le contenu du dashboard
+  // pour capturer le contenu du dashboard
   const dashboardRef = useRef<HTMLDivElement>(null);
   
   const { user } = useSelector((state: RootState) => state.auth);
   const { items, loading, error } = useSelector((state: RootState) => state.data);
 
-  // --- États pour les filtres ---
+  //  etats pour les filtres 
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedOrg, setSelectedOrg] = useState('all');
-  const [isExporting, setIsExporting] = useState(false); // État pour le chargement du bouton export
+  const [isExporting, setIsExporting] = useState(false); // etat pour le chargement du bouton export
 
   useEffect(() => {
     dispatch(fetchJeuxDeDonnees());
@@ -45,7 +45,7 @@ export default function Dashboard() {
     navigate('/login');
   };
 
-  // --- Fonction d'Exportation PDF ---
+  // fonction d'exportation pdf
   const handleExportPDF = async () => {
     if (!dashboardRef.current) return;
     setIsExporting(true);
@@ -55,28 +55,27 @@ export default function Dashboard() {
       
       // Capture du DOM en image
       const canvas = await html2canvas(element, {
-        scale: 2, // Meilleure résolution
+        scale: 2, // meilleure résolution
         useCORS: true, // Pour gérer les images externes si besoin
       });
 
       const imgData = canvas.toDataURL('image/png');
       
-      // Création du PDF (A4, portrait)
+      // Creation du pdf en portrait a4
       const pdf = new jsPDF('p', 'mm', 'a4');
       const pdfWidth = pdf.internal.pageSize.getWidth();
       const pdfHeight = pdf.internal.pageSize.getHeight();
       
-      // Calcul des dimensions pour que l'image tienne dans le PDF
+      // Calcul des dimensions pour que l'image tienne dans le pdf
       const imgWidth = canvas.width;
       const imgHeight = canvas.height;
       const ratio = Math.min(pdfWidth / imgWidth, pdfHeight / imgHeight);
       
       const imgX = (pdfWidth - imgWidth * ratio) / 2;
-      const imgY = 10; // Marge haute
+      const imgY = 10;
 
-      // Ajout de l'image au PDF
-      // Note: Si le contenu est très long, il faudrait gérer plusieurs pages, 
-      // mais pour ce TP, une capture simple "fit-to-page" suffit souvent.
+      // Ajout de l'image au pdf
+     
       pdf.addImage(imgData, 'PNG', imgX, imgY, imgWidth * ratio, imgHeight * ratio);
       
       pdf.save('rapport-dashboard.pdf');
@@ -89,7 +88,7 @@ export default function Dashboard() {
     }
   };
 
-  // --- Logique de Filtrage (inchangée) ---
+  // logique de Filtrage 
   const filteredItems = useMemo(() => {
     return items.filter(item => {
       const title = item.titre ? item.titre.toLowerCase() : '';
@@ -111,24 +110,24 @@ export default function Dashboard() {
     <div className="min-h-screen bg-slate-50 p-8">
       <div className="max-w-7xl mx-auto">
         
-        {/* En-tête avec Boutons */}
+        {/* entete */}
         <header className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
           <div>
             <h1 className="text-3xl font-bold text-slate-800">Tableau de Bord</h1>
             <p className="text-slate-500 mt-1">Bienvenue, {user}</p>
           </div>
           <div className="flex gap-2">
-            {/* Bouton Profil */}
+            {/* bouton profil */}
             <Button 
                 variant="secondary" 
                 onClick={() => navigate('/profil')}
                 className="gap-2"
             >
-                <User size={16} /> {/* Importez User depuis 'lucide-react' */}
+                <User size={16} /> 
                 Mon Profil
             </Button>
             
-            {/* Bouton Export PDF */}
+            {/* bouton export pdf */}
             <Button 
                 variant="outline" 
                 onClick={handleExportPDF} 
@@ -145,17 +144,15 @@ export default function Dashboard() {
           </div>
         </header>
 
-        {/* --- Contenu à capturer pour le PDF --- */}
-        {/* On ajoute la ref ici pour capturer tout ce qui est en dessous du header */}
-        <div ref={dashboardRef} className="bg-slate-50 p-1"> {/* p-1 pour éviter les marges coupées */}
+        {/* contenu à capturer pour le pdf */}
+        
+        <div ref={dashboardRef} className="bg-slate-50 p-1"> 
 
             {loading && <div className="text-center py-8">Chargement des données...</div>}
             {error && <div className="text-center py-8 text-red-500">Erreur: {error}</div>}
 
             {!loading && !error && (
             <>
-                {/* Filtres (On peut choisir de les masquer pour le PDF si on veut, mais ici on capture tout) */}
-                {/* Pour éviter que les filtres apparaissent mochement sur le PDF, on pourrait utiliser une classe 'no-print' */}
                 <div className="bg-white p-4 rounded-lg shadow-sm mb-6 border border-slate-200">
                 <h2 className="text-lg font-semibold mb-4 text-slate-700">Filtres</h2>
                 <div className="flex flex-col md:flex-row gap-4">

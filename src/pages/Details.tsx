@@ -32,7 +32,7 @@ export default function DataDetails() {
   const handleExportPDF = async () => {
     if (!contentRef.current || !data) return;
     try {
-      // Create a style element to override oklch colors with fallbacks
+      
       const styleEl = document.createElement('style');
       styleEl.textContent = `
         * { 
@@ -44,12 +44,12 @@ export default function DataDetails() {
       `;
       document.head.appendChild(styleEl);
 
-      // Wrap content to prevent oklch() CSS parsing errors
+      
       const wrapper = document.createElement('div');
       wrapper.style.backgroundColor = '#ffffff';
       wrapper.innerHTML = contentRef.current.innerHTML;
       
-      // Temporarily append to DOM for html2canvas to render
+      
       document.body.appendChild(wrapper);
 
       const { default: html2canvas } = await import('html2canvas');
@@ -67,14 +67,14 @@ export default function DataDetails() {
       const pdf = new jsPDF('p', 'mm', 'a4');
       const pdfWidth = pdf.internal.pageSize.getWidth();
       
-      // En-tête
+      // entete
       pdf.setFontSize(16);
       pdf.text("Fiche Détail - Jeu de Données", 10, 15);
       pdf.setFontSize(10);
       pdf.text(`Exporté le ${new Date().toLocaleDateString()}`, 10, 22);
       pdf.line(10, 25, pdfWidth - 10, 25);
 
-      // Contenu
+      // contenu
       const imgProps = pdf.getImageProperties(imgData);
       const pdfHeight = (imgProps.height * (pdfWidth - 20)) / imgProps.width;
       pdf.addImage(imgData, 'PNG', 10, 35, pdfWidth - 20, pdfHeight);
@@ -92,14 +92,15 @@ export default function DataDetails() {
   return (
     <div className="p-8 max-w-4xl mx-auto min-h-screen">
       <div className="flex justify-between items-center mb-4">
-        <Button variant="ghost" onClick={() => navigate(-1)} className="gap-2 pl-0 hover:bg-transparent">
+        <Button variant="ghost" onClick={() => navigate(-1)} className="gap-2 pl-0 hover:bg-blue-50 hover:text-blue-700">
             <ArrowLeft size={16} /> Retour
         </Button>
-        <Button variant="outline" onClick={handleExportPDF} className="gap-2 cursor-pointer hover:cursor-pointer">
+        <Button variant="outline" onClick={handleExportPDF} className="gap-2 bg-blue-700 hover:bg-blue-800 text-white font-semibold text-base 
+        px-6 py-3 rounded-lg border border-blue-900 shadow focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 transition-all duration-150 cursor-pointer 
+        hover:cursor-pointer">
             <Download size={16} /> Exporter la fiche
         </Button>
       </div>
-
       <div ref={contentRef} className="p-2 bg-white">
         <Card className="border-none shadow-none">
             <CardHeader className="px-0">
@@ -125,13 +126,7 @@ export default function DataDetails() {
                 </div>
             </div>
 
-            <div className="pt-4">
-                <a href={data.url_source} target="_blank" rel="noopener noreferrer" className="no-print">
-                    <Button variant="outline" className="gap-2 w-full sm:w-auto">
-                        <LinkIcon size={16} /> Voir sur la source originale
-                    </Button>
-                </a>
-            </div>
+           
             </CardContent>
         </Card>
       </div>
