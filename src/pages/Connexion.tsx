@@ -112,7 +112,7 @@ export default function Connexion() {
         </form>
         <div className="px-6 pb-4 text-sm text-slate-600">
           Pas de compte ?{' '}
-          <Link to="/register" className="text-blue-600 hover:underline">
+          <Link to="/inscription" className="text-blue-600 hover:underline">
             S'inscrire
           </Link>
         </div>

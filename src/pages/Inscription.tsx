@@ -75,7 +75,7 @@ export default function Inscription() {
               {loading ? 'Création...' : "S'inscrire"}
             </Button>
             <div className="text-sm text-center text-slate-500">
-              Déjà un compte ? <Link to="/login" className="text-blue-600 hover:underline">Se connecter</Link>
+              Déjà un compte ? <Link to="/connexion" className="text-blue-600 hover:underline">Se connecter</Link>
             </div>
           </CardFooter>
         </form>

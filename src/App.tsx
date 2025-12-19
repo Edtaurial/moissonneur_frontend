@@ -9,7 +9,7 @@ import DataList from './pages/ListeDonnees';
 import DataDetails from './pages/Details';
 import Stats from './pages/Statistiques';
 import Profile from './pages/Profil';
-import Inscription from './pages/inscription';
+import Inscription from './pages/Inscription';
 
 
 const MainLayout = () => {
