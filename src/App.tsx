@@ -3,13 +3,13 @@ import { BrowserRouter as Router, Routes, Route, Navigate, Outlet } from 'react-
 import ProtectedRoute from './components/ProtectedRoute';
 import Navbar from './components/Navbar';
 import GraphQL from './pages/Graphql';
-import Login from './pages/Login';
-import Register from './pages/Register';
+import Connexion from './pages/Connexion';
 import Home from './pages/Acceuil';
 import DataList from './pages/ListeDonnees';
 import DataDetails from './pages/Details';
 import Stats from './pages/Statistiques';
 import Profile from './pages/Profil';
+import Inscription from './pages/inscription';
 
 
 const MainLayout = () => {
@@ -28,8 +28,8 @@ function App() {
     <Router>
       <Routes>
         {/*routes publiques*/}
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
+        <Route path="/connexion" element={<Connexion />} />
+        <Route path="/inscription" element={<Inscription />} />
 
         {/*routes protégées connexion requise*/}
         <Route element={<ProtectedRoute />}>
@@ -58,7 +58,7 @@ function App() {
         </Route>
 
         {/* Route par défaut : redirige vers le login si url est inconnue */}
-        <Route path="*" element={<Navigate to="/login" replace />} />
+        <Route path="*" element={<Navigate to="/connexion" replace />} />
       </Routes>
     </Router>
   );

@@ -13,7 +13,7 @@ export default function Navbar() {
 
   const handleLogout = () => {
     dispatch(logout());
-    navigate('/login');
+    navigate('/connexion');
   };
 
   const isActive = (path: string) => location.pathname === path ? "bg-slate-700" : "";
@@ -38,7 +38,12 @@ export default function Navbar() {
                 <BarChart3 size={18} className="text-green-500"/> Statistiques
               </Button>
             </Link>
-            <Link to="/profile">
+            <Link to="/graphql">
+              <Button variant="ghost" className={`text-white hover:text-white hover:bg-slate-700 cursor-pointer hover:cursor-pointer ${isActive('/profile')}`}>
+                <User size={18} className="text-purple-500"/> GraphQL
+              </Button>
+            </Link>
+            <Link to="/profil">
               <Button variant="ghost" className={`text-white hover:text-white hover:bg-slate-700 cursor-pointer hover:cursor-pointer ${isActive('/profile')}`}>
                 <User size={18} className="text-red-500"/> Profil
               </Button>

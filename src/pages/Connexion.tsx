@@ -18,7 +18,7 @@ import {
 } from "@/components/ui/card"
 import { AlertCircle } from 'lucide-react';
 
-export default function Login() {
+export default function Connexion() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');

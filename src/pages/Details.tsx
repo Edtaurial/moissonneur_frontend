@@ -71,7 +71,7 @@ export default function DataDetails() {
       pdf.setFontSize(16);
       pdf.text("Fiche Détail - Jeu de Données", 10, 15);
       pdf.setFontSize(10);
-      pdf.text(`Exporté le ${new Date().toLocaleDateString()}`, 10, 22);
+      pdf.text(`Exporté le ${new Date().toLocaleDateString()} à ${new Date().toLocaleTimeString()}`, 10, 22);
       pdf.line(10, 25, pdfWidth - 10, 25);
 
       // contenu

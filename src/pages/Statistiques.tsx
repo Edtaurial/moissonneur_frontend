@@ -73,7 +73,7 @@ export default function Stats() {
       pdf.setFontSize(18);
       pdf.text("Rapport Statistique - Plateforme de Données", 10, 15);
       pdf.setFontSize(10);
-      pdf.text(`Généré le ${new Date().toLocaleDateString()}`, 10, 22);
+      pdf.text(`Généré le ${new Date().toLocaleDateString()} à ${new Date().toLocaleTimeString()}`, 10, 22);
 
       pdf.addImage(imgData, 'PNG', 0, 30, pdfWidth, pdfHeight);
       pdf.save('rapport-statistiques.pdf');
