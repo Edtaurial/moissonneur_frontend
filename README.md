@@ -1,62 +1,55 @@
-# Nano React App Default Javascript Template
+# 🌾 Moissonneur - Frontend
 
-The default template project for [nano-react-app](https://github.com/nano-react-app/nano-react-app).
+Une application web moderne développée avec React pour la consultation et l'analyse de données environnementales. Ce projet sert d'interface utilisateur pour visualiser des jeux de données, consulter des statistiques détaillées et gérer son profil utilisateur.
 
-- `npm start` — This will spawn a development server with a default port of `5173`.
-- `npm run build` — This will output a production build in the `dist` directory.
-- `npm run preview` — This will run the production build locally with a default port of `5173` (this will not work if you haven't generated the production build yet).
+🔗 **Démo en ligne :** [https://moissonneur-frontend.vercel.app](https://moissonneur-frontend.vercel.app)
 
-## Custom port
+## 🚀 Fonctionnalités
 
-You can use the `-p` flag to specify a port for development. To do this, you can either run `npm start` with an additional flag:
+*   **Authentification Sécurisée :** Inscription et connexion utilisateurs.
+*   **Tableau de Bord :** Vue d'ensemble avec navigation intuitive.
+*   **Catalogue de Données :** Liste filtrable de données environnementales (Climat, Hydrologie, etc.).
+*   **Visualisation de Données :** Graphiques interactifs et statistiques (via Recharts).
+*   **Interface Responsive :** Design adaptatif pour mobile et desktop (Tailwind CSS + Shadcn/ui).
+*   **Routage :** Navigation fluide côté client (React Router).
 
-```
-npm start -- --port 3000
-```
+## 🛠️ Stack Technique
 
-Or edit the `start` script directly:
+*   **Framework :** [React](https://react.dev/) (Vite)
+*   **Langage :** [TypeScript](https://www.typescriptlang.org/)
+*   **Style :** [Tailwind CSS](https://tailwindcss.com/) & [Shadcn/ui](https://ui.shadcn.com/)
+*   **État Global :** [Redux Toolkit](https://redux-toolkit.js.org/)
+*   **Graphiques :** [Recharts](https://recharts.org/)
+*   **Icônes :** [Lucide React](https://lucide.dev/)
+*   **Déploiement :** Vercel
 
-```
-vite --port 3000
-```
+## 📦 Installation et Démarrage
 
-## Adding styles
+Assurez-vous d'avoir [Node.js](https://nodejs.org/) installé sur votre machine.
 
-You can use CSS files with simple ES2015 `import` statements anywhere in your Javascript:
+1.  **Cloner le dépôt :**
+    ```bash
+    git clone https://github.com/Edtaurial/moissonneur_frontend.git
+    cd moissonneur_frontend
+    ```
 
-```js
-import "./index.css";
-```
+2.  **Installer les dépendances :**
+    ```bash
+    npm install
+    ```
 
-## Babel transforms
+3.  **Lancer le serveur de développement :**
+    ```bash
+    npm start
+    ```
+    L'application sera accessible sur `http://localhost:5173`.
 
-The Babel preset [babel-preset-nano-react-app](https://github.com/nano-react-app/babel-preset-nano-react-app) is used to support the same transforms that Create React App supports.
+## 🏗️ Structure du Projet
 
-The Babel configuration lives inside `package.json` and will override an external `.babelrc` file, so if you want to use `.babelrc` remember to delete the `babel` property inside `package.json`.
-
-
-## Deploy to GitHub Pages
-
-You can also deploy your project using GitHub pages.
-First install the `gh-pages` [package](https://github.com/tschaub/gh-pages):
-
-`npm i -D gh-pages`
-
-Use the following scripts for deployment:
-
-```js
-"scripts": {
-  "start": "vite",
-  "build": "vite build",
-  "predeploy": "rm -rf dist && vite build",
-  "deploy": "gh-pages -d dist"
-},
-```
-
-Then follow the normal procedure in GitHub Pages and select the `gh-pages` branch.
-
-
-
-
-
-<!-- sql password KN-W7WFx"f7x,]r -->
+```text
+src/
+├── components/     # Composants réutilisables (Navbar, Charts, UI...)
+├── pages/          # Pages principales (Login, Accueil, Stats...)
+├── store/          # Gestion d'état Redux (Auth, Data...)
+├── App.tsx         # Configuration des routes
+└── main.tsx        # Point d'entrée de l'application
