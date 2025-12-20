@@ -77,28 +77,7 @@ export default function GraphQLExplorer() {
 
     } catch (err: any) {
       console.error("Erreur GraphQL:", err);
-      
-      let errorMessage = "Erreur inconnue";
-      
-      if (err.response) {
-        // Si le serveur renvoie une réponse (même une erreur)
-        if (typeof err.response.data === 'string') {
-             errorMessage = err.response.data;
-        } else if (err.response.data?.errors && Array.isArray(err.response.data.errors)) {
-             // Erreurs GraphQL standard
-             errorMessage = err.response.data.errors.map((e: any) => e.message).join('\n');
-        } else if (err.response.data?.error) {
-             errorMessage = err.response.data.error;
-        } else if (err.response.data?.detail) {
-             errorMessage = err.response.data.detail;
-        } else {
-             errorMessage = `Erreur ${err.response.status}: ${err.response.statusText}`;
-        }
-      } else if (err.message) {
-        errorMessage = err.message;
-      }
-
-      setError(errorMessage);
+      setError(err.response?.data?.error || err.message || "Erreur inconnue");
     } finally {
       setLoading(false);
     }
