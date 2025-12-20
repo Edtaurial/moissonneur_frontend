@@ -77,7 +77,28 @@ export default function GraphQLExplorer() {
 
     } catch (err: any) {
       console.error("Erreur GraphQL:", err);
-      setError(err.response?.data?.error || err.message || "Erreur inconnue");
+      
+      let errorMessage = "Erreur inconnue";
+      
+      if (err.response) {
+        // Si le serveur renvoie une réponse (même une erreur)
+        if (typeof err.response.data === 'string') {
+             errorMessage = err.response.data;
+        } else if (err.response.data?.errors && Array.isArray(err.response.data.errors)) {
+             // Erreurs GraphQL standard
+             errorMessage = err.response.data.errors.map((e: any) => e.message).join('\n');
+        } else if (err.response.data?.error) {
+             errorMessage = err.response.data.error;
+        } else if (err.response.data?.detail) {
+             errorMessage = err.response.data.detail;
+        } else {
+             errorMessage = `Erreur ${err.response.status}: ${err.response.statusText}`;
+        }
+      } else if (err.message) {
+        errorMessage = err.message;
+      }
+
+      setError(errorMessage);
     } finally {
       setLoading(false);
     }
@@ -98,7 +119,7 @@ export default function GraphQLExplorer() {
               </CardTitle>
               {/* Boutons de préréglages */}
               <div className="flex gap-2 mt-2">
-                <Button variant="outline" size="sm" onClick={() => loadPreset('list')}>Liste (5)</Button>
+                <Button variant="outline" size="sm" onClick={() => loadPreset('list')}>Liste (10)</Button>
                 <Button variant="outline" size="sm" onClick={() => loadPreset('single')}>Détail (ID 1)</Button>
                 <Button variant="outline" size="sm" onClick={() => loadPreset('filter')}>Filtre "eau"</Button>
               </div>
