@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '@/store/authentificationSlice';
 import { RootState } from '@/store/store';
 import { Button } from "@/components/ui/button";
-import { Database, BarChart3, User, LogOut, Home } from 'lucide-react';
+import { Database, BarChart3, User, LogOut, Home, Code } from 'lucide-react';
 
 export default function Navbar() {
   const dispatch = useDispatch();
@@ -40,7 +40,7 @@ export default function Navbar() {
             </Link>
             <Link to="/graphql">
               <Button variant="ghost" className={`text-white hover:text-white hover:bg-slate-700 cursor-pointer hover:cursor-pointer ${isActive('/profile')}`}>
-                <User size={18} className="text-purple-500"/> GraphQL
+                <Code size={18} className="text-purple-500"/> GraphQL
               </Button>
             </Link>
             <Link to="/profil">
